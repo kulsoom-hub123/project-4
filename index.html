@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Premium Signup</title>
+<title>Signup App</title>
 
 <style>
 * {
@@ -14,54 +14,29 @@
 
 body {
   height: 100vh;
-  overflow: hidden;
   background: linear-gradient(-45deg, #0f172a, #1e3a8a, #9333ea, #0ea5e9);
   background-size: 400% 400%;
-  animation: gradientBG 10s ease infinite;
+  animation: bg 10s ease infinite;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Background animation */
-@keyframes gradientBG {
+@keyframes bg {
   0% {background-position: 0%;}
   50% {background-position: 100%;}
   100% {background-position: 0%;}
 }
 
-/* Floating circles */
-.circle {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.1);
-  animation: float 10s infinite;
-}
-
-.circle:nth-child(1) { width: 120px; height: 120px; top: 10%; left: 10%; }
-.circle:nth-child(2) { width: 80px; height: 80px; top: 70%; left: 80%; }
-.circle:nth-child(3) { width: 150px; height: 150px; top: 50%; left: 20%; }
-
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-30px); }
-}
-
-/* Glass Card */
+/* FORM BOX */
 .container {
-  backdrop-filter: blur(25px);
-  background: rgba(255,255,255,0.08);
-  padding: 40px;
-  border-radius: 20px;
   width: 380px;
+  padding: 30px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
   color: white;
-  box-shadow: 0 0 40px rgba(0,0,0,0.3);
-  animation: fadeIn 1s ease;
-}
-
-@keyframes fadeIn {
-  from {opacity:0; transform: translateY(30px);}
-  to {opacity:1;}
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
 }
 
 h2 {
@@ -69,88 +44,74 @@ h2 {
   margin-bottom: 20px;
 }
 
-/* Inputs */
 .field {
-  position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 input {
   width: 100%;
-  padding: 14px;
-  border-radius: 10px;
-  border: 2px solid transparent;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
   outline: none;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.15);
   color: white;
-  transition: 0.3s;
 }
 
 input:focus {
-  border-color: #22c55e;
-  box-shadow: 0 0 10px #22c55e;
+  border: 2px solid #22c55e;
 }
 
-label {
-  position: absolute;
-  left: 12px;
-  top: 12px;
-  color: #ccc;
-  transition: 0.3s;
-}
-
-input:focus + label,
-input:not(:placeholder-shown) + label {
-  top: -8px;
-  font-size: 11px;
-  color: #22c55e;
-}
-
-/* Password toggle */
-.toggle {
-  position: absolute;
-  right: 12px;
-  top: 14px;
-  cursor: pointer;
-  font-size: 12px;
-}
-
-/* Strength bar */
-.strength {
-  height: 5px;
-  border-radius: 5px;
-  margin-top: 5px;
-  background: gray;
-  transition: 0.3s;
-}
-
-/* Button */
+/* BUTTON */
 button {
   width: 100%;
-  padding: 14px;
+  padding: 12px;
+  margin-top: 10px;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   background: #22c55e;
   color: white;
   font-size: 16px;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 button:hover {
-  transform: scale(1.05);
   background: #16a34a;
 }
 
-/* Success popup */
-.success-box {
-  position: absolute;
-  top: 20px;
-  background: #22c55e;
-  padding: 15px 25px;
-  border-radius: 10px;
+/* ERRORS */
+.error {
+  font-size: 12px;
+  color: #ff6b6b;
+  margin-top: 3px;
+}
+
+/* SUCCESS SCREEN */
+#successScreen {
   display: none;
-  animation: pop 0.5s ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #0f172a, #22c55e);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+}
+
+.check {
+  font-size: 70px;
+  width: 100px;
+  height: 100px;
+  background: white;
+  color: #22c55e;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: pop 0.6s ease;
 }
 
 @keyframes pop {
@@ -158,102 +119,122 @@ button:hover {
   to {transform: scale(1);}
 }
 
-.error-text {
-  font-size: 12px;
-  color: #ff6b6b;
+#successScreen h1 {
+  margin-top: 15px;
+}
+
+#successScreen button {
+  margin-top: 20px;
+  background: white;
+  color: #22c55e;
+  font-weight: bold;
 }
 </style>
 </head>
 
 <body>
 
-<div class="circle"></div>
-<div class="circle"></div>
-<div class="circle"></div>
-
-<div class="container">
-  <h2>Sign Up</h2>
+<!-- FORM -->
+<div class="container" id="formBox">
+  <h2>Create Account</h2>
 
   <div class="field">
-    <input id="name" placeholder=" " oninput="validateName()">
-    <label>Name</label>
-    <div class="error-text" id="nameError"></div>
+    <input id="name" placeholder="Full Name">
+    <div class="error" id="nameErr"></div>
   </div>
 
   <div class="field">
-    <input id="email" placeholder=" " oninput="validateEmail()">
-    <label>Email</label>
-    <div class="error-text" id="emailError"></div>
+    <input id="email" placeholder="Email">
+    <div class="error" id="emailErr"></div>
   </div>
 
   <div class="field">
-    <input type="password" id="password" placeholder=" " oninput="checkStrength()">
-    <label>Password</label>
-    <span class="toggle" onclick="togglePass()">Show</span>
-    <div class="strength" id="strengthBar"></div>
-    <div class="error-text" id="passError"></div>
+    <input id="phone" placeholder="Phone Number">
+    <div class="error" id="phoneErr"></div>
   </div>
 
   <div class="field">
-    <input type="password" id="confirm" placeholder=" " oninput="matchPass()">
-    <label>Confirm Password</label>
-    <div class="error-text" id="confirmError"></div>
+    <input id="age" placeholder="Age">
+    <div class="error" id="ageErr"></div>
+  </div>
+
+  <div class="field">
+    <input type="password" id="password" placeholder="Password">
+    <div class="error" id="passErr"></div>
+  </div>
+
+  <div class="field">
+    <input type="password" id="confirm" placeholder="Confirm Password">
+    <div class="error" id="confirmErr"></div>
   </div>
 
   <button onclick="submitForm()">Create Account</button>
+</div>
 
-  <div class="success-box" id="successBox">🎉 Account Created!</div>
+<!-- SUCCESS SCREEN -->
+<div id="successScreen">
+  <div class="check">✔</div>
+  <h1>Account Created!</h1>
+  <p>Welcome 🎉 Your account is ready.</p>
+  <button onclick="goBack()">Back to Form</button>
 </div>
 
 <script>
 
-function validateName() {
-  let val = name.value.trim();
-  nameError.innerText = val.length < 3 ? "Min 3 chars" : "";
-}
-
-function validateEmail() {
-  let pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-  emailError.innerText = !pattern.test(email.value) ? "Invalid email" : "";
-}
-
-function checkStrength() {
-  let val = password.value;
-  let bar = strengthBar;
-
-  if (val.length < 6) {
-    bar.style.width = "30%";
-    bar.style.background = "red";
-    passError.innerText = "Weak password";
-  } else if (/[A-Z]/.test(val) && /[0-9]/.test(val)) {
-    bar.style.width = "100%";
-    bar.style.background = "limegreen";
-    passError.innerText = "";
-  } else {
-    bar.style.width = "60%";
-    bar.style.background = "orange";
-    passError.innerText = "";
-  }
-}
-
-function matchPass() {
-  confirmError.innerText =
-    password.value !== confirm.value ? "Passwords not match" : "";
-}
-
-function togglePass() {
-  password.type = password.type === "password" ? "text" : "password";
-}
-
 function submitForm() {
-  if (
-    !nameError.innerText &&
-    !emailError.innerText &&
-    !passError.innerText &&
-    !confirmError.innerText
-  ) {
-    successBox.style.display = "block";
+
+  let name = name.value.trim();
+  let email = email.value.trim();
+  let phone = phone.value.trim();
+  let age = age.value.trim();
+  let pass = password.value;
+  let confirmPass = confirm.value;
+
+  let valid = true;
+
+  // reset errors
+  document.querySelectorAll(".error").forEach(e => e.innerText = "");
+
+  if (name.length < 3) {
+    nameErr.innerText = "Enter valid name";
+    valid = false;
   }
+
+  let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+  if (!email.match(emailPattern)) {
+    emailErr.innerText = "Invalid email";
+    valid = false;
+  }
+
+  if (phone.length < 10) {
+    phoneErr.innerText = "Invalid phone";
+    valid = false;
+  }
+
+  if (age < 10 || age > 100) {
+    ageErr.innerText = "Invalid age";
+    valid = false;
+  }
+
+  if (pass.length < 6) {
+    passErr.innerText = "Min 6 characters";
+    valid = false;
+  }
+
+  if (pass !== confirmPass) {
+    confirmErr.innerText = "Passwords do not match";
+    valid = false;
+  }
+
+  if (valid) {
+    document.getElementById("formBox").style.display = "none";
+    document.getElementById("successScreen").style.display = "flex";
+  }
+}
+
+function goBack() {
+  document.getElementById("successScreen").style.display = "none";
+  document.getElementById("formBox").style.display = "block";
 }
 
 </script>
