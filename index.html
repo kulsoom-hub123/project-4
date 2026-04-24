@@ -12,79 +12,99 @@
   font-family: Arial;
 }
 
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+/* BACKGROUND FIX */
 body {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background: linear-gradient(-45deg, #0f172a, #1e3a8a, #9333ea, #0ea5e9);
   background-size: 400% 400%;
   animation: bg 10s ease infinite;
+  overflow: hidden;
 }
 
 @keyframes bg {
-  0% {background-position: 0%;}
-  50% {background-position: 100%;}
-  100% {background-position: 0%;}
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
 }
 
-/* FORM */
+/* FORM BOX FIXED SIZE */
 .container {
-  width: 380px;
-  padding: 30px;
-  border-radius: 15px;
-  background: rgba(255,255,255,0.1);
+  width: 420px;
+  padding: 35px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.12);
   backdrop-filter: blur(20px);
   color: white;
-  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  box-shadow: 0 0 40px rgba(0,0,0,0.4);
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity:0; transform: translateY(20px);}
+  to {opacity:1; transform: translateY(0);}
 }
 
 h2 {
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  font-size: 24px;
 }
 
+/* INPUT */
 .field {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 input {
   width: 100%;
-  padding: 12px;
-  border-radius: 8px;
+  padding: 13px;
+  border-radius: 10px;
   border: none;
   outline: none;
   background: rgba(255,255,255,0.15);
   color: white;
+  font-size: 14px;
 }
 
 input:focus {
   border: 2px solid #22c55e;
 }
 
+/* ERROR */
 .error {
   font-size: 12px;
   color: #ff6b6b;
-  margin-top: 3px;
+  margin-top: 4px;
 }
 
+/* BUTTON */
 button {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   margin-top: 10px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #22c55e;
   color: white;
   font-size: 16px;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 button:hover {
+  transform: scale(1.03);
   background: #16a34a;
 }
 
-/* SUCCESS SCREEN */
+/* SUCCESS SCREEN FIX */
 #successScreen {
   display: none;
   position: fixed;
@@ -100,11 +120,11 @@ button:hover {
 }
 
 .check {
-  width: 100px;
-  height: 100px;
+  width: 110px;
+  height: 110px;
   background: white;
   color: #22c55e;
-  font-size: 60px;
+  font-size: 65px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -118,7 +138,8 @@ button:hover {
 }
 
 #successScreen h1 {
-  margin-top: 10px;
+  margin-top: 15px;
+  font-size: 26px;
 }
 
 #successScreen button {
@@ -126,6 +147,8 @@ button:hover {
   background: white;
   color: #22c55e;
   font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 8px;
 }
 </style>
 </head>
@@ -169,7 +192,7 @@ button:hover {
   <button onclick="submitForm()">Create Account</button>
 </div>
 
-<!-- SUCCESS SCREEN -->
+<!-- SUCCESS -->
 <div id="successScreen">
   <div class="check">✔</div>
   <h1>Account Created!</h1>
@@ -190,47 +213,39 @@ function submitForm() {
 
   let valid = true;
 
-  // reset errors
   document.querySelectorAll(".error").forEach(e => e.innerText = "");
 
-  // NAME
   if (name.length < 3) {
     document.getElementById("nameErr").innerText = "Enter valid name";
     valid = false;
   }
 
-  // EMAIL
   let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
   if (!emailPattern.test(email)) {
     document.getElementById("emailErr").innerText = "Invalid email";
     valid = false;
   }
 
-  // PHONE
   if (phone.length < 10) {
-    document.getElementById("phoneErr").innerText = "Invalid phone number";
+    document.getElementById("phoneErr").innerText = "Invalid phone";
     valid = false;
   }
 
-  // AGE
   if (age < 10 || age > 100) {
     document.getElementById("ageErr").innerText = "Invalid age";
     valid = false;
   }
 
-  // PASSWORD
   if (password.length < 6) {
-    document.getElementById("passErr").innerText = "Min 6 characters";
+    document.getElementById("passErr").innerText = "Min 6 chars";
     valid = false;
   }
 
-  // CONFIRM PASSWORD
   if (password !== confirm) {
     document.getElementById("confirmErr").innerText = "Passwords do not match";
     valid = false;
   }
 
-  // SUCCESS
   if (valid) {
     document.getElementById("formBox").style.display = "none";
     document.getElementById("successScreen").style.display = "flex";
