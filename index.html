@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Premium Signup</title>
 
 <style>
@@ -11,25 +9,25 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
 }
 
 body {
   height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(-45deg, #0f172a, #1e3a8a, #9333ea, #0ea5e9);
+  background-size: 400% 400%;
+  animation: gradientBG 10s ease infinite;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(270deg, #6a11cb, #2575fc, #ff6a00);
-  background-size: 600% 600%;
-  animation: gradientMove 10s ease infinite;
-  overflow: hidden;
 }
 
-/* Animated background */
-@keyframes gradientMove {
-  0% {background-position: 0% 50%;}
-  50% {background-position: 100% 50%;}
-  100% {background-position: 0% 50%;}
+/* Background animation */
+@keyframes gradientBG {
+  0% {background-position: 0%;}
+  50% {background-position: 100%;}
+  100% {background-position: 0%;}
 }
 
 /* Floating circles */
@@ -37,85 +35,134 @@ body {
   position: absolute;
   border-radius: 50%;
   background: rgba(255,255,255,0.1);
-  animation: float 10s infinite ease-in-out;
+  animation: float 10s infinite;
 }
 
-.circle:nth-child(1) { width: 150px; height:150px; top:10%; left:10%; }
-.circle:nth-child(2) { width: 200px; height:200px; bottom:15%; right:15%; animation-duration: 14s;}
-.circle:nth-child(3) { width: 100px; height:100px; bottom:20%; left:20%; animation-duration: 12s;}
+.circle:nth-child(1) { width: 120px; height: 120px; top: 10%; left: 10%; }
+.circle:nth-child(2) { width: 80px; height: 80px; top: 70%; left: 80%; }
+.circle:nth-child(3) { width: 150px; height: 150px; top: 50%; left: 20%; }
 
 @keyframes float {
   0%,100% { transform: translateY(0); }
   50% { transform: translateY(-30px); }
 }
 
-/* Glass card */
+/* Glass Card */
 .container {
-  backdrop-filter: blur(20px);
-  background: rgba(255,255,255,0.1);
-  padding: 30px;
+  backdrop-filter: blur(25px);
+  background: rgba(255,255,255,0.08);
+  padding: 40px;
   border-radius: 20px;
-  width: 320px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-  text-align: center;
-  color: #fff;
+  width: 380px;
+  color: white;
+  box-shadow: 0 0 40px rgba(0,0,0,0.3);
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity:0; transform: translateY(30px);}
+  to {opacity:1;}
 }
 
 h2 {
+  text-align: center;
   margin-bottom: 20px;
 }
 
-.input-box {
-  margin: 15px 0;
+/* Inputs */
+.field {
   position: relative;
+  margin-bottom: 20px;
 }
 
 input {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   border-radius: 10px;
-  border: none;
+  border: 2px solid transparent;
   outline: none;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  transition: 0.3s;
 }
 
 input:focus {
-  box-shadow: 0 0 10px #fff;
+  border-color: #22c55e;
+  box-shadow: 0 0 10px #22c55e;
 }
 
-/* Password strength */
+label {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  color: #ccc;
+  transition: 0.3s;
+}
+
+input:focus + label,
+input:not(:placeholder-shown) + label {
+  top: -8px;
+  font-size: 11px;
+  color: #22c55e;
+}
+
+/* Password toggle */
+.toggle {
+  position: absolute;
+  right: 12px;
+  top: 14px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Strength bar */
 .strength {
   height: 5px;
   border-radius: 5px;
   margin-top: 5px;
+  background: gray;
   transition: 0.3s;
 }
 
 /* Button */
 button {
-  margin-top: 15px;
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   border: none;
   border-radius: 10px;
-  background: #fff;
-  color: #333;
-  font-weight: bold;
+  background: #22c55e;
+  color: white;
+  font-size: 16px;
   cursor: pointer;
   transition: 0.3s;
 }
 
 button:hover {
   transform: scale(1.05);
+  background: #16a34a;
 }
 
-/* Success message */
-.success {
+/* Success popup */
+.success-box {
+  position: absolute;
+  top: 20px;
+  background: #22c55e;
+  padding: 15px 25px;
+  border-radius: 10px;
   display: none;
-  margin-top: 15px;
-  color: #00ffcc;
+  animation: pop 0.5s ease;
+}
+
+@keyframes pop {
+  from {transform: scale(0);}
+  to {transform: scale(1);}
+}
+
+.error-text {
+  font-size: 12px;
+  color: #ff6b6b;
 }
 </style>
-
 </head>
 
 <body>
@@ -125,59 +172,90 @@ button:hover {
 <div class="circle"></div>
 
 <div class="container">
-  <h2>Create Account</h2>
+  <h2>Sign Up</h2>
 
-  <div class="input-box">
-    <input type="text" placeholder="Full Name" required>
+  <div class="field">
+    <input id="name" placeholder=" " oninput="validateName()">
+    <label>Name</label>
+    <div class="error-text" id="nameError"></div>
   </div>
 
-  <div class="input-box">
-    <input type="email" placeholder="Email" required>
+  <div class="field">
+    <input id="email" placeholder=" " oninput="validateEmail()">
+    <label>Email</label>
+    <div class="error-text" id="emailError"></div>
   </div>
 
-  <div class="input-box">
-    <input type="password" id="password" placeholder="Password" required>
+  <div class="field">
+    <input type="password" id="password" placeholder=" " oninput="checkStrength()">
+    <label>Password</label>
+    <span class="toggle" onclick="togglePass()">Show</span>
     <div class="strength" id="strengthBar"></div>
+    <div class="error-text" id="passError"></div>
   </div>
 
-<button onclick="signup()">Sign Up</button>
+  <div class="field">
+    <input type="password" id="confirm" placeholder=" " oninput="matchPass()">
+    <label>Confirm Password</label>
+    <div class="error-text" id="confirmError"></div>
+  </div>
 
-  <div class="success" id="successMsg">🎉 Account Created Successfully!</div>
+  <button onclick="submitForm()">Create Account</button>
+
+  <div class="success-box" id="successBox">🎉 Account Created!</div>
 </div>
 
 <script>
-const password = document.getElementById("password");
-const strengthBar = document.getElementById("strengthBar");
 
-password.addEventListener("input", () => {
-  const val = password.value;
-  let strength = 0;
-
-  if (val.length > 5) strength++;
-  if (val.match(/[A-Z]/)) strength++;
-  if (val.match(/[0-9]/)) strength++;
-  if (val.match(/[^A-Za-z0-9]/)) strength++;
-
-  if (strength === 1) {
-    strengthBar.style.width = "25%";
-    strengthBar.style.background = "red";
-  } else if (strength === 2) {
-    strengthBar.style.width = "50%";
-    strengthBar.style.background = "orange";
-  } else if (strength === 3) {
-    strengthBar.style.width = "75%";
-    strengthBar.style.background = "yellow";
-  } else if (strength === 4) {
-    strengthBar.style.width = "100%";
-    strengthBar.style.background = "green";
-  } else {
-    strengthBar.style.width = "0%";
-  }
-});
-
-function signup() {
-  document.getElementById("successMsg").style.display = "block";
+function validateName() {
+  let val = name.value.trim();
+  nameError.innerText = val.length < 3 ? "Min 3 chars" : "";
 }
+
+function validateEmail() {
+  let pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+  emailError.innerText = !pattern.test(email.value) ? "Invalid email" : "";
+}
+
+function checkStrength() {
+  let val = password.value;
+  let bar = strengthBar;
+
+  if (val.length < 6) {
+    bar.style.width = "30%";
+    bar.style.background = "red";
+    passError.innerText = "Weak password";
+  } else if (/[A-Z]/.test(val) && /[0-9]/.test(val)) {
+    bar.style.width = "100%";
+    bar.style.background = "limegreen";
+    passError.innerText = "";
+  } else {
+    bar.style.width = "60%";
+    bar.style.background = "orange";
+    passError.innerText = "";
+  }
+}
+
+function matchPass() {
+  confirmError.innerText =
+    password.value !== confirm.value ? "Passwords not match" : "";
+}
+
+function togglePass() {
+  password.type = password.type === "password" ? "text" : "password";
+}
+
+function submitForm() {
+  if (
+    !nameError.innerText &&
+    !emailError.innerText &&
+    !passError.innerText &&
+    !confirmError.innerText
+  ) {
+    successBox.style.display = "block";
+  }
+}
+
 </script>
 
 </body>
