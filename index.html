@@ -2,278 +2,224 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>DecodeLabs Signup App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DecodeLabs - Signup</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
   font-family: Arial;
 }
 
-body {
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(-45deg, #0f172a, #1e3a8a, #9333ea, #0ea5e9);
-  background-size: 400% 400%;
-  animation: bg 10s ease infinite;
-}
-
-/* BACKGROUND ANIMATION */
-@keyframes bg {
-  0% {background-position: 0%;}
-  50% {background-position: 100%;}
-  100% {background-position: 0%;}
-}
-
-/* FLOATING LIGHT EFFECTS */
-.circle {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.08);
-  animation: float 8s infinite ease-in-out;
-}
-
-.circle:nth-child(1) { width: 180px; height:180px; top:10%; left:10%; }
-.circle:nth-child(2) { width: 120px; height:120px; bottom:10%; right:15%; }
-.circle:nth-child(3) { width: 220px; height:220px; top:50%; left:20%; }
-
-@keyframes float {
-  0%,100% {transform: translateY(0);}
-  50% {transform: translateY(-30px);}
-}
-
-/* FORM CARD */
-.container {
-  width: 460px;
-  padding: 40px;
-  border-radius: 18px;
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(25px);
-  color: white;
-  box-shadow: 0 0 50px rgba(0,0,0,0.4);
-  animation: fade 0.8s ease;
-}
-
-@keyframes fade {
-  from {opacity:0; transform: translateY(20px);}
-  to {opacity:1;}
-}
-
-h2 {
-  text-align: center;
-  font-size: 26px;
-}
-
-.brand {
-  text-align: center;
-  font-size: 12px;
-  color: #ddd;
-  margin-bottom: 20px;
-}
-
-/* INPUTS */
-.field {
-  margin-bottom: 12px;
-}
-
-input {
-  width: 100%;
-  padding: 14px;
-  border-radius: 10px;
-  border: none;
-  outline: none;
-  background: rgba(255,255,255,0.15);
-  color: white;
-  font-size: 14px;
-}
-
-input:focus {
-  border: 2px solid #22c55e;
-}
-
-/* ERROR */
-.error {
-  font-size: 12px;
-  color: #ff6b6b;
-  margin-top: 3px;
-}
-
-/* BUTTON */
-button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 10px;
-  background: #22c55e;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: scale(1.03);
-}
-
-/* SUCCESS SCREEN */
-#successScreen {
-  display: none;
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  top:0;
-  left:0;
-  background: linear-gradient(135deg,#0f172a,#22c55e);
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  color: white;
-}
-
-.check {
-  width:120px;
-  height:120px;
-  background:white;
-  color:#22c55e;
-  font-size:70px;
-  border-radius:50%;
+body{
+  min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  animation: pop 0.5s ease;
+  padding:20px;
+
+  background: linear-gradient(-45deg,#0f172a,#1e3a8a,#9333ea,#0ea5e9);
+  background-size:400% 400%;
+  animation:bg 10s ease infinite;
 }
 
-@keyframes pop {
-  from {transform: scale(0);}
-  to {transform: scale(1);}
+@keyframes bg{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
 
-#successScreen h1 {
-  margin-top: 15px;
+/* CARD */
+.card{
+  width:100%;
+  max-width:420px;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(18px);
+  border-radius:18px;
+  padding:25px;
+  color:white;
+  box-shadow:0 0 40px rgba(0,0,0,0.3);
 }
 
-#successScreen button {
-  margin-top: 20px;
-  background: white;
-  color: #22c55e;
-  font-weight: bold;
+/* TITLE */
+h2{
+  text-align:center;
+  margin-bottom:5px;
+}
+
+.sub{
+  text-align:center;
+  font-size:12px;
+  color:#ddd;
+  margin-bottom:20px;
+}
+
+/* INPUT */
+input{
+  width:100%;
+  padding:12px;
+  margin-bottom:5px;
+  border-radius:10px;
+  border:none;
+  outline:none;
+  background: rgba(255,255,255,0.15);
+  color:white;
+}
+
+input:focus{
+  border:2px solid #22c55e;
+}
+
+.error{
+  font-size:12px;
+  color:#ff6b6b;
+  margin-bottom:10px;
+}
+
+/* BUTTON */
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#22c55e;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.03);
+}
+
+/* SUCCESS */
+#success{
+  display:none;
+  position:fixed;
+  inset:0;
+  background: linear-gradient(135deg,#0f172a,#22c55e);
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  color:white;
+}
+
+.tick{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  background:white;
+  color:#22c55e;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:55px;
+  animation:pop 0.4s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(0)}
+  to{transform:scale(1)}
+}
+
+#success h1{
+  margin-top:10px;
+}
+
+#success button{
+  margin-top:15px;
+  background:white;
+  color:#22c55e;
+  padding:10px 20px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="circle"></div>
-<div class="circle"></div>
-<div class="circle"></div>
-
 <!-- FORM -->
-<div class="container" id="formBox">
-  <h2>Create Account</h2>
-  <div class="brand">Powered by DecodeLabs</div>
+<div class="card" id="form">
+  <h2>Sign Up</h2>
+  <div class="sub">DecodeLabs Registration</div>
 
-  <div class="field">
-    <input id="name" placeholder="Full Name">
-    <div class="error" id="nameErr"></div>
-  </div>
+  <input id="name" placeholder="Full Name">
+  <div class="error" id="e1"></div>
 
-  <div class="field">
-    <input id="email" placeholder="Email">
-    <div class="error" id="emailErr"></div>
-  </div>
+  <input id="email" placeholder="Email">
+  <div class="error" id="e2"></div>
 
-  <div class="field">
-    <input id="phone" placeholder="Phone">
-    <div class="error" id="phoneErr"></div>
-  </div>
+  <input id="phone" placeholder="Phone">
+  <div class="error" id="e3"></div>
 
-  <div class="field">
-    <input id="age" placeholder="Age">
-    <div class="error" id="ageErr"></div>
-  </div>
+  <input type="password" id="pass" placeholder="Password">
+  <div class="error" id="e4"></div>
 
-  <div class="field">
-    <input type="password" id="password" placeholder="Password">
-    <div class="error" id="passErr"></div>
-  </div>
+  <input type="password" id="cpass" placeholder="Confirm Password">
+  <div class="error" id="e5"></div>
 
-  <div class="field">
-    <input type="password" id="confirm" placeholder="Confirm Password">
-    <div class="error" id="confirmErr"></div>
-  </div>
-
-  <button onclick="submitForm()">Create Account</button>
+  <button onclick="submit()">Create Account</button>
 </div>
 
 <!-- SUCCESS -->
-<div id="successScreen">
-  <div class="check">✔</div>
+<div id="success">
+  <div class="tick">✔</div>
   <h1>Account Created!</h1>
   <p>Welcome to DecodeLabs 🚀</p>
-  <button onclick="goBack()">Back</button>
+  <button onclick="back()">Back</button>
 </div>
 
 <script>
 
-function submitForm() {
+function submit(){
 
-  let name = document.getElementById("name").value.trim();
-  let email = document.getElementById("email").value.trim();
-  let phone = document.getElementById("phone").value.trim();
-  let age = document.getElementById("age").value.trim();
-  let password = document.getElementById("password").value;
-  let confirm = document.getElementById("confirm").value;
+let name=document.getElementById("name").value.trim();
+let email=document.getElementById("email").value.trim();
+let phone=document.getElementById("phone").value.trim();
+let pass=document.getElementById("pass").value;
+let cpass=document.getElementById("cpass").value;
 
-  let valid = true;
+let ok=true;
 
-  document.querySelectorAll(".error").forEach(e => e.innerText="");
+document.querySelectorAll(".error").forEach(e=>e.innerText="");
 
-  if(name.length < 3){
-    document.getElementById("nameErr").innerText = "Enter valid name";
-    valid = false;
-  }
-
-  let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-  if(!emailPattern.test(email)){
-    document.getElementById("emailErr").innerText = "Invalid email";
-    valid = false;
-  }
-
-  if(phone.length < 10){
-    document.getElementById("phoneErr").innerText = "Invalid phone";
-    valid = false;
-  }
-
-  if(age < 10 || age > 100){
-    document.getElementById("ageErr").innerText = "Invalid age";
-    valid = false;
-  }
-
-  if(password.length < 6){
-    document.getElementById("passErr").innerText = "Min 6 characters";
-    valid = false;
-  }
-
-  if(password !== confirm){
-    document.getElementById("confirmErr").innerText = "Passwords do not match";
-    valid = false;
-  }
-
-  if(valid){
-    document.getElementById("formBox").style.display = "none";
-    document.getElementById("successScreen").style.display = "flex";
-  }
+if(name.length<3){
+document.getElementById("e1").innerText="Enter valid name";
+ok=false;
 }
 
-function goBack(){
-  document.getElementById("successScreen").style.display = "none";
-  document.getElementById("formBox").style.display = "block";
+if(!email.includes("@")){
+document.getElementById("e2").innerText="Invalid email";
+ok=false;
+}
+
+if(phone.length<10){
+document.getElementById("e3").innerText="Invalid phone";
+ok=false;
+}
+
+if(pass.length<6){
+document.getElementById("e4").innerText="Min 6 characters";
+ok=false;
+}
+
+if(pass!==cpass){
+document.getElementById("e5").innerText="Password not match";
+ok=false;
+}
+
+if(ok){
+document.getElementById("form").style.display="none";
+document.getElementById("success").style.display="flex";
+}
+
+}
+
+function back(){
+document.getElementById("success").style.display="none";
+document.getElementById("form").style.display="block";
 }
 
 </script>
