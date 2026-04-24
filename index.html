@@ -14,12 +14,12 @@
 
 body {
   height: 100vh;
-  background: linear-gradient(-45deg, #0f172a, #1e3a8a, #9333ea, #0ea5e9);
-  background-size: 400% 400%;
-  animation: bg 10s ease infinite;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(-45deg, #0f172a, #1e3a8a, #9333ea, #0ea5e9);
+  background-size: 400% 400%;
+  animation: bg 10s ease infinite;
 }
 
 @keyframes bg {
@@ -28,7 +28,7 @@ body {
   100% {background-position: 0%;}
 }
 
-/* FORM BOX */
+/* FORM */
 .container {
   width: 380px;
   padding: 30px;
@@ -41,11 +41,11 @@ body {
 
 h2 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .field {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 input {
@@ -62,7 +62,12 @@ input:focus {
   border: 2px solid #22c55e;
 }
 
-/* BUTTON */
+.error {
+  font-size: 12px;
+  color: #ff6b6b;
+  margin-top: 3px;
+}
+
 button {
   width: 100%;
   padding: 12px;
@@ -79,21 +84,14 @@ button:hover {
   background: #16a34a;
 }
 
-/* ERRORS */
-.error {
-  font-size: 12px;
-  color: #ff6b6b;
-  margin-top: 3px;
-}
-
 /* SUCCESS SCREEN */
 #successScreen {
   display: none;
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
   width: 100%;
+  height: 100vh;
   background: linear-gradient(135deg, #0f172a, #22c55e);
   justify-content: center;
   align-items: center;
@@ -102,16 +100,16 @@ button:hover {
 }
 
 .check {
-  font-size: 70px;
   width: 100px;
   height: 100px;
   background: white;
   color: #22c55e;
+  font-size: 60px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: pop 0.6s ease;
+  animation: pop 0.5s ease;
 }
 
 @keyframes pop {
@@ -120,7 +118,7 @@ button:hover {
 }
 
 #successScreen h1 {
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 #successScreen button {
@@ -175,57 +173,64 @@ button:hover {
 <div id="successScreen">
   <div class="check">✔</div>
   <h1>Account Created!</h1>
-  <p>Welcome 🎉 Your account is ready.</p>
-  <button onclick="goBack()">Back to Form</button>
+  <p>Welcome 🎉</p>
+  <button onclick="goBack()">Back</button>
 </div>
 
 <script>
 
 function submitForm() {
 
-  let name = name.value.trim();
-  let email = email.value.trim();
-  let phone = phone.value.trim();
-  let age = age.value.trim();
-  let pass = password.value;
-  let confirmPass = confirm.value;
+  let name = document.getElementById("name").value.trim();
+  let email = document.getElementById("email").value.trim();
+  let phone = document.getElementById("phone").value.trim();
+  let age = document.getElementById("age").value.trim();
+  let password = document.getElementById("password").value;
+  let confirm = document.getElementById("confirm").value;
 
   let valid = true;
 
   // reset errors
   document.querySelectorAll(".error").forEach(e => e.innerText = "");
 
+  // NAME
   if (name.length < 3) {
-    nameErr.innerText = "Enter valid name";
+    document.getElementById("nameErr").innerText = "Enter valid name";
     valid = false;
   }
 
+  // EMAIL
   let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-  if (!email.match(emailPattern)) {
-    emailErr.innerText = "Invalid email";
+  if (!emailPattern.test(email)) {
+    document.getElementById("emailErr").innerText = "Invalid email";
     valid = false;
   }
 
+  // PHONE
   if (phone.length < 10) {
-    phoneErr.innerText = "Invalid phone";
+    document.getElementById("phoneErr").innerText = "Invalid phone number";
     valid = false;
   }
 
+  // AGE
   if (age < 10 || age > 100) {
-    ageErr.innerText = "Invalid age";
+    document.getElementById("ageErr").innerText = "Invalid age";
     valid = false;
   }
 
-  if (pass.length < 6) {
-    passErr.innerText = "Min 6 characters";
+  // PASSWORD
+  if (password.length < 6) {
+    document.getElementById("passErr").innerText = "Min 6 characters";
     valid = false;
   }
 
-  if (pass !== confirmPass) {
-    confirmErr.innerText = "Passwords do not match";
+  // CONFIRM PASSWORD
+  if (password !== confirm) {
+    document.getElementById("confirmErr").innerText = "Passwords do not match";
     valid = false;
   }
 
+  // SUCCESS
   if (valid) {
     document.getElementById("formBox").style.display = "none";
     document.getElementById("successScreen").style.display = "flex";
