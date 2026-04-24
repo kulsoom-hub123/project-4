@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Signup App</title>
+<title>DecodeLabs Signup App</title>
 
 <style>
 * {
@@ -12,60 +12,78 @@
   font-family: Arial;
 }
 
-html, body {
-  height: 100%;
-  width: 100%;
-}
-
-/* BACKGROUND FIX */
 body {
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   background: linear-gradient(-45deg, #0f172a, #1e3a8a, #9333ea, #0ea5e9);
   background-size: 400% 400%;
   animation: bg 10s ease infinite;
-  overflow: hidden;
 }
 
+/* BACKGROUND ANIMATION */
 @keyframes bg {
-  0% {background-position: 0% 50%;}
-  50% {background-position: 100% 50%;}
-  100% {background-position: 0% 50%;}
+  0% {background-position: 0%;}
+  50% {background-position: 100%;}
+  100% {background-position: 0%;}
 }
 
-/* FORM BOX FIXED SIZE */
+/* FLOATING LIGHT EFFECTS */
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  animation: float 8s infinite ease-in-out;
+}
+
+.circle:nth-child(1) { width: 180px; height:180px; top:10%; left:10%; }
+.circle:nth-child(2) { width: 120px; height:120px; bottom:10%; right:15%; }
+.circle:nth-child(3) { width: 220px; height:220px; top:50%; left:20%; }
+
+@keyframes float {
+  0%,100% {transform: translateY(0);}
+  50% {transform: translateY(-30px);}
+}
+
+/* FORM CARD */
 .container {
-  width: 420px;
-  padding: 35px;
+  width: 460px;
+  padding: 40px;
   border-radius: 18px;
   background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(25px);
   color: white;
-  box-shadow: 0 0 40px rgba(0,0,0,0.4);
-  animation: fadeIn 0.6s ease;
+  box-shadow: 0 0 50px rgba(0,0,0,0.4);
+  animation: fade 0.8s ease;
 }
 
-@keyframes fadeIn {
+@keyframes fade {
   from {opacity:0; transform: translateY(20px);}
-  to {opacity:1; transform: translateY(0);}
+  to {opacity:1;}
 }
 
 h2 {
   text-align: center;
-  margin-bottom: 20px;
-  font-size: 24px;
+  font-size: 26px;
 }
 
-/* INPUT */
+.brand {
+  text-align: center;
+  font-size: 12px;
+  color: #ddd;
+  margin-bottom: 20px;
+}
+
+/* INPUTS */
 .field {
   margin-bottom: 12px;
 }
 
 input {
   width: 100%;
-  padding: 13px;
+  padding: 14px;
   border-radius: 10px;
   border: none;
   outline: none;
@@ -82,7 +100,7 @@ input:focus {
 .error {
   font-size: 12px;
   color: #ff6b6b;
-  margin-top: 4px;
+  margin-top: 3px;
 }
 
 /* BUTTON */
@@ -101,18 +119,17 @@ button {
 
 button:hover {
   transform: scale(1.03);
-  background: #16a34a;
 }
 
-/* SUCCESS SCREEN FIX */
+/* SUCCESS SCREEN */
 #successScreen {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100vh;
-  background: linear-gradient(135deg, #0f172a, #22c55e);
+  top:0;
+  left:0;
+  background: linear-gradient(135deg,#0f172a,#22c55e);
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -120,15 +137,15 @@ button:hover {
 }
 
 .check {
-  width: 110px;
-  height: 110px;
-  background: white;
-  color: #22c55e;
-  font-size: 65px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width:120px;
+  height:120px;
+  background:white;
+  color:#22c55e;
+  font-size:70px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   animation: pop 0.5s ease;
 }
 
@@ -139,7 +156,6 @@ button:hover {
 
 #successScreen h1 {
   margin-top: 15px;
-  font-size: 26px;
 }
 
 #successScreen button {
@@ -147,17 +163,20 @@ button:hover {
   background: white;
   color: #22c55e;
   font-weight: bold;
-  padding: 10px 20px;
-  border-radius: 8px;
 }
 </style>
 </head>
 
 <body>
 
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+
 <!-- FORM -->
 <div class="container" id="formBox">
   <h2>Create Account</h2>
+  <div class="brand">Powered by DecodeLabs</div>
 
   <div class="field">
     <input id="name" placeholder="Full Name">
@@ -170,7 +189,7 @@ button:hover {
   </div>
 
   <div class="field">
-    <input id="phone" placeholder="Phone Number">
+    <input id="phone" placeholder="Phone">
     <div class="error" id="phoneErr"></div>
   </div>
 
@@ -196,7 +215,7 @@ button:hover {
 <div id="successScreen">
   <div class="check">✔</div>
   <h1>Account Created!</h1>
-  <p>Welcome 🎉</p>
+  <p>Welcome to DecodeLabs 🚀</p>
   <button onclick="goBack()">Back</button>
 </div>
 
@@ -213,46 +232,46 @@ function submitForm() {
 
   let valid = true;
 
-  document.querySelectorAll(".error").forEach(e => e.innerText = "");
+  document.querySelectorAll(".error").forEach(e => e.innerText="");
 
-  if (name.length < 3) {
+  if(name.length < 3){
     document.getElementById("nameErr").innerText = "Enter valid name";
     valid = false;
   }
 
   let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-  if (!emailPattern.test(email)) {
+  if(!emailPattern.test(email)){
     document.getElementById("emailErr").innerText = "Invalid email";
     valid = false;
   }
 
-  if (phone.length < 10) {
+  if(phone.length < 10){
     document.getElementById("phoneErr").innerText = "Invalid phone";
     valid = false;
   }
 
-  if (age < 10 || age > 100) {
+  if(age < 10 || age > 100){
     document.getElementById("ageErr").innerText = "Invalid age";
     valid = false;
   }
 
-  if (password.length < 6) {
-    document.getElementById("passErr").innerText = "Min 6 chars";
+  if(password.length < 6){
+    document.getElementById("passErr").innerText = "Min 6 characters";
     valid = false;
   }
 
-  if (password !== confirm) {
+  if(password !== confirm){
     document.getElementById("confirmErr").innerText = "Passwords do not match";
     valid = false;
   }
 
-  if (valid) {
+  if(valid){
     document.getElementById("formBox").style.display = "none";
     document.getElementById("successScreen").style.display = "flex";
   }
 }
 
-function goBack() {
+function goBack(){
   document.getElementById("successScreen").style.display = "none";
   document.getElementById("formBox").style.display = "block";
 }
